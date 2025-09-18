@@ -45,7 +45,7 @@ end program main
 Compile, link, and run the program:
 
 ```
-$ gfortran -o example example.f90 libfortran-ncurses.a -lncurses
+$ gfortran -I/opt/include -o example example.f90 /opt/lib/libfortran-ncurses.a -lncurses
 $ ./example
 ```
 
@@ -60,6 +60,8 @@ fortran-ncurses = { git = "https://github.com/interkosmos/fortran-ncurses.git" }
 
 ## Compatibility
 
+* All character strings passed to the interfaces have to be null-terminated
+  with `c_null_char`.
 * The ncurses macros `COLOR_PAIR`, `COLOR_PAIRS`, `COLORS`, `COLS`, `LINES` and
   `PAIR_NUMBER` are bound through functions of the same name.
 

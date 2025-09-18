@@ -16,12 +16,16 @@ EXAMPLES = acs color key label mouse scroll win
 
 SRC = src/ncurses.f90 \
       src/ncurses_const.f90 \
+      src/ncurses_extensions.f90 \
       src/ncurses_macro.c \
-      src/ncurses_panel.f90
+      src/ncurses_panel.f90 \
+      src/ncurses_util.f90
 OBJ = ncurses.o \
       ncurses_const.o \
+      ncurses_extensions.o \
       ncurses_macro.o \
-      ncurses_panel.o
+      ncurses_panel.o \
+      ncurses_util.o
 
 .PHONY: all clean examples install
 
@@ -32,7 +36,9 @@ mkconst: util/mkconst.c
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -c src/ncurses_macro.c
+	$(FC) $(FFLAGS) -c src/ncurses_util.f90
 	$(FC) $(FFLAGS) -c src/ncurses_const.f90
+	$(FC) $(FFLAGS) -c src/ncurses_extensions.f90
 	$(FC) $(FFLAGS) -c src/ncurses_panel.f90
 	$(FC) $(FFLAGS) -c src/ncurses.f90
 	$(AR) $(AFLAGS) $(TARGET) $(OBJ)
@@ -68,7 +74,9 @@ install: $(TARGET)
 	install -d $(INCDIR)
 	install -m 644 ncurses.mod $(INCDIR)/
 	install -m 644 ncurses_const.mod $(INCDIR)/
+	install -m 644 ncurses_extensions.mod $(INCDIR)/
 	install -m 644 ncurses_panel.mod $(INCDIR)/
+	install -m 644 ncurses_util.mod $(INCDIR)/
 
 clean:
 	if [ `ls -1 *.mod 2>/dev/null | wc -l` -gt 0 ]; then rm *.mod; fi

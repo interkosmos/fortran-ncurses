@@ -2,6 +2,7 @@
 ! Licence: ISC
 program main
     use :: ncurses
+    use :: ncurses_extensions
     implicit none (type, external)
 
     integer     :: ch, rc
@@ -19,11 +20,11 @@ program main
     rc = refresh()
 
     ! Create window.
-    h = 5; w = 20; x = 5; y = 2
+    h = 5; w = 32; x = 5; y = 2
     win = newwin(h, w, y, x)
 
     rc = box(win, 0_chtype, 0_chtype)
-    rc = mvwprintw(win, 1, 1, 'Window' // c_null_char)
+    rc = mvwprintw(win, 1, 1, curses_version() // c_null_char)
     rc = wrefresh(win)
 
     ch = getch()

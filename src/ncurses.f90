@@ -206,6 +206,13 @@ module ncurses
             integer(c_int)                      :: chgat
         end function chgat
 
+        ! int clear(void)
+        function clear() bind(c, name='clear')
+            import :: c_int
+            implicit none
+            integer(c_int) :: clear
+        end function clear
+
         ! int clearok(WINDOW *win, bool bf)
         function clearok(win, bf) bind(c, name='clearok')
             import :: c_bool, c_int, c_ptr
@@ -214,6 +221,13 @@ module ncurses
             logical(c_bool), intent(in), value :: bf
             integer(c_int)                     :: clearok
         end function clearok
+
+        ! int clrtobot(void)
+        function clrtobot() bind(c, name='clrtobot')
+            import :: c_int
+            implicit none
+            integer(c_int) :: clrtobot
+        end function clrtobot
 
         ! int clrtoeol(void)
         function clrtoeol() bind(c, name='clrtoeol')
@@ -241,6 +255,22 @@ module ncurses
             integer(c_int)                      :: color_set
         end function color_set
 
+        ! int copywin(const WINDOW *srcwin, WINDOW *dstwin, int sminrow, int smincol, int dminrow, int dmincol, int dmaxrow, int dmaxcol, int overlay)
+        function copywin(srcwin, dstwin, sminrow, smincol, dminrow, dmincol, dmaxrow, dmaxcol, overlay) bind(c, name='copywin')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: srcwin
+            type(c_ptr),    intent(in), value :: dstwin
+            integer(c_int), intent(in), value :: sminrow
+            integer(c_int), intent(in), value :: smincol
+            integer(c_int), intent(in), value :: dminrow
+            integer(c_int), intent(in), value :: dmincol
+            integer(c_int), intent(in), value :: dmaxrow
+            integer(c_int), intent(in), value :: dmaxcol
+            integer(c_int), intent(in), value :: overlay
+            integer(c_int)                    :: copywin
+        end function copywin
+
         ! int curs_set(int visibility)
         function curs_set(visibility) bind(c, name='curs_set')
             import :: c_int
@@ -262,6 +292,21 @@ module ncurses
             implicit none
             integer(c_int) :: def_shell_mode
         end function def_shell_mode
+
+        ! int delay_output(int ms)
+        function delay_output(ms) bind(c, name='delay_output')
+            import :: c_int
+            implicit none
+            integer(c_int), intent(in), value :: ms
+            integer(c_int)                    :: delay_output
+        end function delay_output
+
+        ! int delch(void)
+        function delch() bind(c, name='delch')
+            import :: c_int
+            implicit none
+            integer(c_int) :: delch
+        end function delch
 
         ! void delscreen(SCREEN* sp)
         subroutine delscreen() bind(c, name='delscreen')
@@ -324,12 +369,30 @@ module ncurses
             integer(c_int) :: endwin
         end function endwin
 
+        ! int erase(void)
+        function erase() bind(c, name='erase')
+            import :: c_int
+            implicit none
+            integer(c_int) :: erase
+        end function erase
+
+        ! void filter(void)
+        subroutine filter() bind(c, name='filter')
+        end subroutine filter
+
         ! int flash(void)
         function flash() bind(c, name='flash')
             import :: c_int
             implicit none
             integer(c_int) :: flash
         end function flash
+
+        ! int flushinp(void)
+        function flushinp() bind(c, name='flushinp')
+            import :: c_int
+            implicit none
+            integer(c_int) :: flushinp
+        end function flushinp
 
         ! chtype getbkgd(WINDOW *win)
         function getbkgd(win) bind(c, name='getbkgd')
@@ -370,6 +433,14 @@ module ncurses
             character(c_char), intent(inout) :: str
             integer(c_int)                   :: getstr
         end function getstr
+
+        ! WINDOW *getwin(FILE *filep)
+        function getwin(filep) bind(c, name='getwin')
+            import :: c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: filep
+            type(c_ptr)                    :: getwin
+        end function getwin
 
         ! int halfdelay(int tenths)
         function halfdelay(tenths) bind(c, name='halfdelay')
@@ -481,12 +552,37 @@ module ncurses
             integer(c_int)                     :: intrflush
         end function intrflush
 
+        ! bool is_linetouched(WINDOW *win, int line)
+        function is_linetouched(win, line) bind(c, name='is_linetouched')
+            import :: c_bool, c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: line
+            logical(c_bool)                   :: is_linetouched
+        end function is_linetouched
+
+        ! bool is_wintouched(WINDOW *win)
+        function is_wintouched(win) bind(c, name='is_wintouched')
+            import :: c_bool, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            logical(c_bool)                :: is_wintouched
+        end function is_wintouched
+
         ! bool isendwin(void)
         function isendwin() bind(c, name='isendwin')
             import :: c_bool
             implicit none
             logical(c_bool) :: isendwin
         end function isendwin
+
+        ! char *keyname(int c)
+        function keyname_(c) bind(c, name='keyname')
+            import :: c_int, c_ptr
+            implicit none
+            integer(c_int), intent(in), value :: c
+            type(c_ptr)                       :: keyname_
+        end function keyname_
 
         ! int keypad(WINDOW *win, bool bf)
         function keypad(win, bf) bind(c, name='keypad')
@@ -613,6 +709,15 @@ module ncurses
             type(c_ptr),      intent(in), value :: opts
             integer(c_int)                      :: mvchgat
         end function mvchgat
+
+        ! int mvdelch(int y, int x)
+        function mvdelch(y, x) bind(c, name='mvdelch')
+            import :: c_int
+            implicit none
+            integer(c_int), intent(in), value :: y
+            integer(c_int), intent(in), value :: x
+            integer(c_int)                    :: mvdelch
+        end function mvdelch
 
         ! int mvderwin(WINDOW *win, int par_y, int par_x)
         function mvderwin(win, par_y, par_x) bind(c, name='mvderwin')
@@ -758,6 +863,16 @@ module ncurses
             integer(c_int)                      :: mvwchgat
         end function mvwchgat
 
+        ! int mvwdelch(WINDOW *win, int y, int x)
+        function mvwdelch(win, y, x) bind(c, name='mvwdelch')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: y
+            integer(c_int), intent(in), value :: x
+            integer(c_int)                    :: mvwdelch
+        end function mvwdelch
+
         ! int mvwgetch(WINDOW *win, int y, int x)
         function mvwgetch(win, y, x) bind(c, name='mvwgetch')
             import :: c_int, c_ptr
@@ -893,6 +1008,10 @@ module ncurses
             integer(c_int) :: noecho
         end function noecho
 
+        ! void nofilter(void)
+        subroutine nofilter() bind(c, name='nofilter')
+        end subroutine nofilter
+
         ! int nonl(void)
         function nonl() bind(c, name='nonl')
             import :: c_int
@@ -920,6 +1039,24 @@ module ncurses
             integer(c_int)                     :: notimeout
         end function notimeout
 
+        ! int overlay(const WINDOW *srcwin, WINDOW *dstwin)
+        function overlay(srcwin, dstwin) bind(c, name='overlay')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: srcwin
+            type(c_ptr), intent(in), value :: dstwin
+            integer(c_int)                 :: overlay
+        end function overlay
+
+        ! int overwrite(const WINDOW *srcwin, WINDOW *dstwin)
+        function overwrite(srcwin, dstwin) bind(c, name='overwrite')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: srcwin
+            type(c_ptr), intent(in), value :: dstwin
+            integer(c_int)                 :: overwrite
+        end function overwrite
+
         ! int pair_content(short pair, short *f, short *b)
         function pair_content(pair, f, b) bind(c, name='pair_content')
             import :: c_int, c_short
@@ -929,6 +1066,15 @@ module ncurses
             integer(c_short), intent(out)       :: b
             integer(c_int)                      :: pair_content
         end function pair_content
+
+        ! int putwin(WINDOW *win, FILE *filep)
+        function putwin(win, filep) bind(c, name='putwin')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            type(c_ptr), intent(in), value :: filep
+            integer(c_int)                 :: putwin
+        end function putwin
 
         ! void qiflush(void)
         subroutine qiflush() bind(c, name='qiflush')
@@ -984,6 +1130,22 @@ module ncurses
             integer(c_int) :: savetty
         end function savetty
 
+        ! int scr_dump(const char *filename)
+        function scr_dump(filename) bind(c, name='scr_dump')
+            import :: c_char, c_int
+            implicit none
+            character(c_char), intent(in) :: filename
+            integer(c_int)                :: scr_dump
+        end function scr_dump
+
+        ! int scr_init(const char *filename)
+        function scr_init(filename) bind(c, name='scr_init')
+            import :: c_char, c_int
+            implicit none
+            character(c_char), intent(in) :: filename
+            integer(c_int)                :: scr_init
+        end function scr_init
+
         ! int scrollok(WINDOW *win, bool bf)
         function scrollok(win, bf) bind(c, name='scrollok')
             import :: c_bool, c_int, c_ptr
@@ -1007,7 +1169,7 @@ module ncurses
             implicit none
             integer(c_int), intent(in), value :: top
             integer(c_int), intent(in), value :: bot
-            integer(c_int) :: setscrreg
+            integer(c_int)                    :: setscrreg
         end function setscrreg
 
         ! attr_t slk_attr(void)
@@ -1187,6 +1349,24 @@ module ncurses
             integer(c_int), intent(in), value :: delay
         end subroutine timeout
 
+        ! int touchline(WINDOW *win, int start, int count)
+        function touchline(win, start, count) bind(c, name='touchline')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: start
+            integer(c_int), intent(in), value :: count
+            integer(c_int)                    :: touchline
+        end function touchline
+
+        ! int touchwin(WINDOW *win)
+        function touchwin(win) bind(c, name='touchwin')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: touchwin
+        end function touchwin
+
         ! int typeahead(int fd)
         function typeahead(fd) bind(c, name='typeahead')
             import :: c_int
@@ -1194,6 +1374,14 @@ module ncurses
             integer(c_int), intent(in), value :: fd
             integer(c_int)                    :: typeahead
         end function typeahead
+
+        ! char *unctrl(chtype c)
+        function unctrl_(c) bind(c, name='unctrl')
+            import :: c_ptr, chtype
+            implicit none
+            integer(chtype), intent(in), value :: c
+            type(c_ptr)                        :: unctrl_
+        end function unctrl_
 
         ! int ungetch(int ch)
         function ungetch(ch) bind(c, name='ungetch')
@@ -1210,6 +1398,21 @@ module ncurses
             type(mevent), intent(out) :: event
             integer(c_int)            :: ungetmouse
         end function ungetmouse
+
+        ! int untouchwin(WINDOW *win)
+        function untouchwin(win) bind(c, name='untouchwin')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: untouchwin
+        end function untouchwin
+
+        ! void use_env(bool f)
+        subroutine use_env(f) bind(c, name='use_env')
+            import :: c_bool
+            implicit none
+            logical(c_bool), intent(in), value :: f
+        end subroutine use_env
 
         ! int vline(chtype ch, int n)
         function vline(ch, n) bind(c, name='vline')
@@ -1267,6 +1470,75 @@ module ncurses
             integer(c_int)                       :: waddstr
         end function waddstr
 
+        ! int wattr_get(WINDOW *win, attr_t *attrs, short *pair, void *opts)
+        function wattr_get(win, attrs, pair, opts) bind(c, name='wattr_get')
+            import :: attr_t, c_int, c_ptr, c_short
+            implicit none
+            type(c_ptr),      intent(in), value :: win
+            integer(c_int),   intent(out)       :: attrs
+            integer(c_short), intent(out)       :: pair
+            type(c_ptr),      intent(in), value :: opts
+            integer(c_int)                      :: wattr_get
+        end function wattr_get
+
+        ! int wattr_off(WINDOW *win, attr_t attrs, void *opts)
+        function wattr_off(win, attrs, opts) bind(c, name='wattr_off')
+            import :: attr_t, c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: attrs
+            type(c_ptr),    intent(in), value :: opts
+            integer(c_int)                    :: wattr_off
+        end function wattr_off
+
+        ! int wattr_on(WINDOW *win, attr_t attrs, void *opts)
+        function wattr_on(win, attrs, opts) bind(c, name='wattr_on')
+            import :: attr_t, c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: attrs
+            type(c_ptr),    intent(in), value :: opts
+            integer(c_int)                    :: wattr_on
+        end function wattr_on
+
+        ! int wattr_set(WINDOW *win, attr_t attrs, short pair, void *opts)
+        function wattr_set(win, attrs, pair, opts) bind(c, name='wattr_set')
+            import :: attr_t, c_int, c_ptr, c_short
+            implicit none
+            type(c_ptr),      intent(in), value :: win
+            integer(c_int),   intent(in), value :: attrs
+            integer(c_short), intent(in), value :: pair
+            type(c_ptr),      intent(in), value :: opts
+            integer(c_int)                      :: wattr_set
+        end function wattr_set
+
+        ! int wattroff(WINDOW *win, int attrs)
+        function wattroff(win, attrs) bind(c, name='wattroff')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: attrs
+            integer(c_int)                    :: wattroff
+        end function wattroff
+
+        ! int wattron(WINDOW *win, int attrs)
+        function wattron(win, attrs) bind(c, name='wattron')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: attrs
+            integer(c_int)                    :: wattron
+        end function wattron
+
+        ! int wattrset(WINDOW *win, int attrs)
+        function wattrset(win, attrs) bind(c, name='wattrset')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: attrs
+            integer(c_int)                    :: wattrset
+        end function wattrset
+
         ! int wbkgd(WINDOW *win, chtype ch)
         function wbkgd(win, ch) bind(c, name='wbkgd')
             import :: c_int, c_ptr, chtype
@@ -1300,6 +1572,34 @@ module ncurses
             integer(c_int)                     :: wborder
         end function wborder
 
+        ! int wchgat(WINDOW *win, int n, attr_t attr, short color, const void *opts)
+        function wchgat(win, n, attr, color, opts) bind(c, name='wchgat')
+            import :: attr_t, c_int, c_ptr, c_short
+            implicit none
+            type(c_ptr),      intent(in), value :: win
+            integer(c_int),   intent(in), value :: n
+            integer(c_int),   intent(in), value :: attr
+            integer(c_short), intent(in), value :: color
+            type(c_ptr),      intent(in), value :: opts
+            integer(c_int)                      :: wchgat
+        end function wchgat
+
+        ! int wclear(WINDOW *win)
+        function wclear(win) bind(c, name='wclear')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: wclear
+        end function wclear
+
+        ! int wclrtobot(WINDOW *win)
+        function wclrtobot(win) bind(c, name='wclrtobot')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: wclrtobot
+        end function wclrtobot
+
         ! int wclrtoeol(WINDOW *win)
         function wclrtoeol(win) bind(c, name='wclrtoeol')
             import :: c_int, c_ptr
@@ -1308,12 +1608,29 @@ module ncurses
             integer(c_int)                 :: wclrtoeol
         end function wclrtoeol
 
+        ! int wcolor_set(WINDOW *win, short color_pair_number, void* opts)
+        function wcolor_set(win, color_pair_number) bind(c, name='wcolor_set')
+            import :: c_int, c_ptr, c_short
+            implicit none
+            type(c_ptr),      intent(in), value :: win
+            integer(c_short), intent(in), value :: color_pair_number
+            integer(c_int)                      :: wcolor_set
+        end function wcolor_set
+
         ! void wcursyncup(WINDOW *win)
         subroutine wcursyncup(win) bind(c, name='wcursyncup')
             import :: c_ptr
             implicit none
             type(c_ptr), intent(in), value :: win
         end subroutine wcursyncup
+
+        ! int wdelch(WINDOW *win)
+        function wdelch(win) bind(c, name='wdelch')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: wdelch
+        end function wdelch
 
         ! int wechochar(WINDOW *win, const chtype ch)
         function wechochar(win, ch) bind(c, name='wechochar')
@@ -1333,6 +1650,14 @@ module ncurses
             integer(c_int), intent(in), value :: x
             logical(c_bool)                   :: wenclose
         end function wenclose
+
+        ! int werase(WINDOW *win)
+        function werase(win) bind(c, name='werase')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: werase
+        end function werase
 
         ! int wgetch(WINDOW *win)
         function wgetch(win) bind(c, name='wgetch')
@@ -1435,6 +1760,22 @@ module ncurses
             integer(c_int)                    :: wsetscrreg
         end function wsetscrreg
 
+        ! int wstandend(WINDOW *win)
+        function wstandend(win) bind(c, name='wstandend')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: wstandend
+        end function wstandend
+
+        ! int wstandout(WINDOW *win)
+        function wstandout(win) bind(c, name='wstandout')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: wstandout
+        end function wstandout
+
         ! void wsyncdown(WINDOW *win)
         subroutine wsyncdown(win) bind(c, name='wsyncdown')
             import :: c_ptr
@@ -1456,6 +1797,17 @@ module ncurses
             type(c_ptr),    intent(in), value :: win
             integer(c_int), intent(in), value :: delay
         end subroutine wtimeout
+
+        ! int wtouchln(WINDOW *win, int y, int n, int changed)
+        function wtouchln(win, y, n, changed) bind(c, name='wtouchln')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: y
+            integer(c_int), intent(in), value :: n
+            integer(c_int), intent(in), value :: changed
+            integer(c_int)                    :: wtouchln
+        end function wtouchln
 
         ! int wvline(WINDOW *win, chtype ch, int n)
         function wvline(win, ch, n) bind(c, name='wvline')
@@ -1690,7 +2042,19 @@ module ncurses
         end function wprintw_long
     end interface wprintw
 contains
+    function keyname(c) result(str)
+        use :: ncurses_util
+        integer(c_int), intent(in) :: c
+        character(:), allocatable  :: str
+
+        type(c_ptr) :: ptr
+
+        ptr = keyname_(c)
+        call c_f_str_ptr(ptr, str)
+    end function keyname
+
     function slk_label(labnum) result(str)
+        use :: ncurses_util
         integer, intent(in)       :: labnum
         character(:), allocatable :: str
 
@@ -1700,37 +2064,14 @@ contains
         call c_f_str_ptr(ptr, str)
     end function slk_label
 
-    subroutine c_f_str_ptr(c_str, f_str)
-        !! Copies a C string, passed as a C pointer, to a Fortran string.
-        type(c_ptr),               intent(in)  :: c_str
-        character(:), allocatable, intent(out) :: f_str
+    function unctrl(c) result(str)
+        use :: ncurses_util
+        integer(chtype), intent(in) :: c
+        character(:), allocatable   :: str
 
-        character(c_char), pointer :: ptrs(:)
-        integer(c_size_t)          :: i, sz
+        type(c_ptr) :: ptr
 
-        interface
-            function c_strlen(str) bind(c, name='strlen')
-                import :: c_ptr, c_size_t
-                implicit none
-                type(c_ptr), intent(in), value :: str
-                integer(c_size_t)              :: c_strlen
-            end function c_strlen
-        end interface
-
-        copy_block: block
-            if (.not. c_associated(c_str)) exit copy_block
-            sz = c_strlen(c_str)
-            if (sz < 0) exit copy_block
-            call c_f_pointer(c_str, ptrs, [ sz ])
-            allocate (character(sz) :: f_str)
-
-            do i = 1, sz
-                f_str(i:i) = ptrs(i)
-            end do
-
-            return
-        end block copy_block
-
-        if (.not. allocated(f_str)) f_str = ''
-    end subroutine c_f_str_ptr
+        ptr = unctrl_(c)
+        call c_f_str_ptr(ptr, str)
+    end function unctrl
 end module ncurses

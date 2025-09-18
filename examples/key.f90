@@ -6,8 +6,9 @@ program main
 
     character(*), parameter :: Z = c_new_line // c_null_char
 
-    character(16) :: str
-    integer       :: ch, rc
+    character(:), allocatable :: key
+    character(16)             :: str
+    integer                   :: ch, rc
 
     stdscr = initscr()
 
@@ -27,6 +28,10 @@ program main
         rc = attron(A_BOLD)
         rc = printw(achar(ch) // Z)
         rc = attroff(A_BOLD)
+
+        key = keyname(ch)
+        rc = printw(ch)
+        rc = printw(' (' // key // ')' // Z)
     end if
 
     rc = noraw() ! Enable line buffering.
