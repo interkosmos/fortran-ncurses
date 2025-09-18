@@ -331,15 +331,6 @@ module ncurses
             integer(c_int) :: flash
         end function flash
 
-        ! void getbegyx(WINDOW *win, int y, int x)
-        subroutine getbegyx(win, y, x) bind(c, name='getbegyx')
-            import :: c_int, c_ptr
-            implicit none
-            type(c_ptr),    intent(in), value :: win
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine getbegyx
-
         ! chtype getbkgd(WINDOW *win)
         function getbkgd(win) bind(c, name='getbkgd')
             import :: c_ptr, chtype
@@ -354,15 +345,6 @@ module ncurses
             implicit none
             integer(c_int) :: getch
         end function getch
-
-        ! void getmaxyx(WINDOW *win, int y, int x)
-        subroutine getmaxyx(win, y, x) bind(c, name='getmaxyx')
-            import :: c_int, c_ptr
-            implicit none
-            type(c_ptr),    intent(in), value :: win
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine getmaxyx
 
         ! int getmouse(MEVENT *event)
         function getmouse(event) bind(c, name='getmouse')
@@ -381,15 +363,6 @@ module ncurses
             integer(c_int)                       :: getnstr
         end function getnstr
 
-        ! void getparyx(WINDOW *win, int y, int x)
-        subroutine getparyx(win, y, x) bind(c, name='getparyx')
-            import :: c_int, c_ptr
-            implicit none
-            type(c_ptr),    intent(in), value :: win
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine getparyx
-
         ! int getstr(char *str)
         function getstr(str) bind(c, name='getstr')
             import :: c_char, c_int
@@ -397,23 +370,6 @@ module ncurses
             character(c_char), intent(inout) :: str
             integer(c_int)                   :: getstr
         end function getstr
-
-        ! void getsyx(int y, int x)
-        subroutine getsyx(y, x) bind(c, name='getsyx')
-            import :: c_int
-            implicit none
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine getsyx
-
-        ! void getyx(WINDOW *win, int y, int x)
-        subroutine getyx(win, y, x) bind(c, name='getyx')
-            import :: c_int, c_ptr
-            implicit none
-            type(c_ptr),    intent(in), value :: win
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine getyx
 
         ! int halfdelay(int tenths)
         function halfdelay(tenths) bind(c, name='halfdelay')
@@ -1054,14 +1010,6 @@ module ncurses
             integer(c_int) :: setscrreg
         end function setscrreg
 
-        ! void setsyx(int y, int x)
-        subroutine setsyx(y, x) bind(c, name='setsyx')
-            import :: c_int
-            implicit none
-            integer(c_int), intent(in), value :: y
-            integer(c_int), intent(in), value :: x
-        end subroutine setsyx
-
         ! attr_t slk_attr(void)
         function slk_attr() bind(c, name='slk_attr')
             import :: attr_t
@@ -1551,6 +1499,50 @@ module ncurses
             integer(c_int) :: cols
         end function cols
 
+        ! void getbegyx(WINDOW *win, int y, int x)
+        subroutine getbegyx(win, y, x) bind(c, name='getbegyx_')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(out)       :: y
+            integer(c_int), intent(out)       :: x
+        end subroutine getbegyx
+
+        ! void getmaxyx_(WINDOW *win, int *y, int *x)
+        subroutine getmaxyx(win, y, x) bind(c, name='getmaxyx_')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(out)       :: y
+            integer(c_int), intent(out)       :: x
+        end subroutine getmaxyx
+
+        ! void getparyx(WINDOW *win, int y, int x)
+        subroutine getparyx(win, y, x) bind(c, name='getparyx_')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(out)       :: y
+            integer(c_int), intent(out)       :: x
+        end subroutine getparyx
+
+        ! void getsyx(int y, int x)
+        subroutine getsyx(y, x) bind(c, name='getsyx_')
+            import :: c_int
+            implicit none
+            integer(c_int), intent(out) :: y
+            integer(c_int), intent(out) :: x
+        end subroutine getsyx
+
+        ! void getyx(WINDOW *win, int *y, int *x)
+        subroutine getyx(win, y, x) bind(c, name='getyx_')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(out)       :: y
+            integer(c_int), intent(out)       :: x
+        end subroutine getyx
+
         ! int lines(void)
         function lines() bind(c, name='lines')
             import :: c_int
@@ -1565,6 +1557,14 @@ module ncurses
             integer(attr_t), intent(in), value :: attrs
             integer(c_int)                     :: pair_number
         end function pair_number
+
+        ! void setsyx(int y, int x)
+        subroutine setsyx(y, x) bind(c, name='setsyx_')
+            import :: c_int
+            implicit none
+            integer(c_int), intent(in), value :: y
+            integer(c_int), intent(in), value :: x
+        end subroutine setsyx
     end interface
 
     ! Variadic functions.

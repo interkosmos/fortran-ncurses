@@ -9,10 +9,10 @@ CFLAGS  = -O2
 FFLAGS  = -O2 -std=f2018
 LDFLAGS = -L$(PREFIX)/lib
 LDLIBS  = -lncurses
-TARGET  = libfortran-ncurses.a
-
-INCDIR  = $(PREFIX)/include/libfortran-ncurses
-LIBDIR  = $(PREFIX)/lib
+INCDIR   = $(PREFIX)/include/libfortran-ncurses
+LIBDIR   = $(PREFIX)/lib
+TARGET   = libfortran-ncurses.a
+EXAMPLES = acs color key label mouse scroll win
 
 SRC = src/ncurses.f90 \
       src/ncurses_const.f90 \
@@ -37,13 +37,28 @@ $(TARGET): $(SRC)
 	$(FC) $(FFLAGS) -c src/ncurses.f90
 	$(AR) $(AFLAGS) $(TARGET) $(OBJ)
 
-examples: $(TARGET)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o acs   examples/acs.f90   $(TARGET) $(LDLIBS)
+examples: $(EXAMPLES)
+
+acs: $(TARGET) examples/acs.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o acs examples/acs.f90 $(TARGET) $(LDLIBS)
+
+color: $(TARGET) examples/color.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o color examples/color.f90 $(TARGET) $(LDLIBS)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o key   examples/key.f90   $(TARGET) $(LDLIBS)
+
+key: $(TARGET) examples/key.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o key examples/key.f90 $(TARGET) $(LDLIBS)
+
+label: $(TARGET) examples/label.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o label examples/label.f90 $(TARGET) $(LDLIBS)
+
+mouse: $(TARGET) examples/mouse.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o mouse examples/mouse.f90 $(TARGET) $(LDLIBS)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o win   examples/win.f90   $(TARGET) $(LDLIBS)
+
+scroll: $(TARGET) examples/scroll.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o scroll examples/scroll.f90 $(TARGET) $(LDLIBS)
+
+win: $(TARGET) examples/win.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o win examples/win.f90 $(TARGET) $(LDLIBS)
 
 install: $(TARGET)
 	@echo "--- Installing library to $(LIBDIR)/ ..."
@@ -65,4 +80,5 @@ clean:
 	if [ -e key ]; then rm key; fi
 	if [ -e label ]; then rm label; fi
 	if [ -e mouse ]; then rm mouse; fi
+	if [ -e scroll ]; then rm scroll; fi
 	if [ -e win ]; then rm win; fi

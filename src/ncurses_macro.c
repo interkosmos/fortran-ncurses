@@ -23,6 +23,12 @@ int printw_long(long);
 int wprintw_char(void *, const char *);
 int wprintw_int(void *, int);
 int wprintw_long(void *, long);
+void getbegyx_(void *, int *, int *);
+void getmaxyx_(void *, int *, int *);
+void getparyx_(void *, int *, int *);
+void getsyx_(int *, int *);
+void getyx_(void *, int *, int *);
+void setsyx_(int, int);
 
 int color_pair(int n) { return COLOR_PAIR(n); }
 int color_pairs(void) { return COLOR_PAIRS;   }
@@ -47,6 +53,13 @@ int printw_long(long n)          { return printw("%ld", n);  }
 int wprintw_char(void *win, const char *str) { return wprintw((WINDOW *) win, "%s", str); }
 int wprintw_int (void *win, int n)           { return wprintw((WINDOW *) win, "%d", n);   }
 int wprintw_long(void *win, long n)          { return wprintw((WINDOW *) win, "%ld", n);  }
+
+void getbegyx_(void *win, int *y, int *x) { getbegyx((WINDOW *) win, *y, *x); }
+void getmaxyx_(void *win, int *y, int *x) { getmaxyx((WINDOW *) win, *y, *x); }
+void getparyx_(void *win, int *y, int *x) { getparyx((WINDOW *) win, *y, *x); }
+void getsyx_(int *y, int *x)              { getsyx(*y, *x);                   }
+void getyx_(void *win, int *y, int *x)    { getyx((WINDOW *) win, *y, *x);    }
+void setsyx_(int y, int x)                { setsyx(y, x);                     }
 
 #ifdef __cplusplus
 }
