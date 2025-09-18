@@ -19,7 +19,7 @@ program main
     rc = curs_set(0)
     rc = scrollok(stdscr, TRUE)
 
-    ml = min(len(a) - 2, w)
+    ml = min(len(a) - 1, w)
     gw = 15
     lw = (ml / 2) - (gw / 2)
 
