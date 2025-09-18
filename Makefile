@@ -12,7 +12,7 @@ LDLIBS  = -lncurses
 INCDIR   = $(PREFIX)/include/libfortran-ncurses
 LIBDIR   = $(PREFIX)/lib
 TARGET   = libfortran-ncurses.a
-EXAMPLES = acs color key label mouse scroll win
+EXAMPLES = acs color key label mouse scroll ship win
 
 SRC = src/ncurses.f90 \
       src/ncurses_const.f90 \
@@ -63,6 +63,9 @@ mouse: $(TARGET) examples/mouse.f90
 scroll: $(TARGET) examples/scroll.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o scroll examples/scroll.f90 $(TARGET) $(LDLIBS)
 
+ship: $(TARGET) examples/ship.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o ship examples/ship.f90 $(TARGET) $(LDLIBS)
+
 win: $(TARGET) examples/win.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o win examples/win.f90 $(TARGET) $(LDLIBS)
 
@@ -89,4 +92,5 @@ clean:
 	if [ -e label ]; then rm label; fi
 	if [ -e mouse ]; then rm mouse; fi
 	if [ -e scroll ]; then rm scroll; fi
+	if [ -e ship ]; then rm ship; fi
 	if [ -e win ]; then rm win; fi

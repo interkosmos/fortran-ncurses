@@ -47,6 +47,11 @@ source-dir = "examples"
 main = "scroll.f90"
 
 [[example]]
+name = "ship"
+source-dir = "examples"
+main = "ship.f90"
+
+[[example]]
 name = "win"
 source-dir = "examples"
 main = "win.f90"

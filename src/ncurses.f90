@@ -1146,6 +1146,22 @@ module ncurses
             integer(c_int)                :: scr_init
         end function scr_init
 
+        ! int scrl(int n)
+        function scrl(n) bind(c, name='scrl')
+            import :: c_int
+            implicit none
+            integer(c_int), intent(in), value :: n
+            integer(c_int)                    :: scrl
+        end function scrl
+
+        ! int scroll(WINDOW *win)
+        function scroll(win) bind(c, name='scroll')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr), intent(in), value :: win
+            integer(c_int)                 :: scroll
+        end function scroll
+
         ! int scrollok(WINDOW *win, bool bf)
         function scrollok(win, bf) bind(c, name='scrollok')
             import :: c_bool, c_int, c_ptr
@@ -1749,6 +1765,15 @@ module ncurses
             type(c_ptr), intent(in), value :: win
             integer(c_int)                 :: wrefresh
         end function wrefresh
+
+        ! int wscroll(WINDOW *win, int n)
+        function wscroll(win, n) bind(c, name='wscroll')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: win
+            integer(c_int), intent(in), value :: n
+            integer(c_int)                    :: wscroll
+        end function wscroll
 
         ! int wsetscrreg(WINDOW *win, int top, int bot)
         function wsetscrreg(win, top, bot) bind(c, name='wsetscrreg')
