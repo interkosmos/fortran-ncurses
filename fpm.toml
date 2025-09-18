@@ -1,0 +1,47 @@
+name = "fortran-ncurses"
+version = "0.1.0"
+license = "ISC"
+author = "Philipp Engel"
+maintainer = "@interkosmos"
+copyright = "Copyright (c) 2025, Philipp Engel"
+description = "Fortran 2018 ISO C binding interfaces to ncurses"
+keywords = [ "curses", "ncurses" ]
+
+[build]
+link = "ncurses"
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[[example]]
+name = "acs"
+source-dir = "examples"
+main = "acs.f90"
+
+[[example]]
+name = "color"
+source-dir = "examples"
+main = "color.f90"
+
+[[example]]
+name = "key"
+source-dir = "examples"
+main = "key.f90"
+
+[[example]]
+name = "label"
+source-dir = "examples"
+main = "label.f90"
+
+[[example]]
+name = "mouse"
+source-dir = "examples"
+main = "mouse.f90"
+
+[[example]]
+name = "win"
+source-dir = "examples"
+main = "win.f90"
