@@ -28,28 +28,28 @@ program main
     end if
 
     rc = start_color()
-    rc = attrset(color_pair(1))
+    rc = attrset(color_pair(7))
     nn = lines() - 1
     rc = mvaddstr( 0, 35, 'COLOR DEMO'                        // c_null_char)
     rc = mvaddstr( 2,  0, 'low intensity text colors (0-7)'   // c_null_char)
     rc = mvaddstr(12,  0, 'high intensity text colors (8-15)' // c_null_char)
     rc = mvaddstr(nn,  0, 'press any key to quit'             // c_null_char)
-    rc = attroff(color_pair(1))
+    rc = attroff(color_pair(7))
 
     call init_color_pairs()
 
     ! Draw test pattern.
     do bg = 0, 7
         do fg = 0, 7
-            rc = attron(color_pair(color_number(fg, bg)))
+            call set_color(fg, bg)
             rc = mvaddstr(fg + 3, bg * 10, '...test...' // c_null_char)
-            rc = attroff(color_pair(color_number(fg, bg)))
+            call unset_color(fg, bg)
         end do
 
-        do fg = 0, 7
-            rc = attron(color_pair(color_number(fg, bg)))
-            rc = mvaddstr(fg + 13, bg * 10, '...test...' // c_null_char)
-            rc = attroff(color_pair(color_number(fg, bg)))
+        do fg = 8, 15
+            call set_color(fg, bg)
+            rc = mvaddstr(fg + 5, bg * 10, '...test...' // c_null_char)
+            call unset_color(fg, bg)
         end do
     end do
 
@@ -97,4 +97,28 @@ contains
             end do
         end do
     end subroutine init_color_pairs
+
+    logical function is_bold(fg)
+        integer(c_short), intent(in) :: fg
+
+        is_bold = (iand(shiftl(1_c_short, 3), fg) /= 0)
+    end function is_bold
+
+    subroutine set_color(fg, bg)
+        integer(c_short), intent(in) :: fg, bg
+
+        integer :: rc
+
+        rc = attron(color_pair(color_number(fg, bg)))
+        if (is_bold(fg)) rc = attron(A_BOLD)
+    end subroutine set_color
+
+    subroutine unset_color(fg, bg)
+        integer(c_short), intent(in) :: fg, bg
+
+        integer :: rc
+
+        rc = attroff(color_pair(color_number(fg, bg)))
+        if (is_bold(fg)) rc = attroff(A_BOLD)
+    end subroutine unset_color
 end program main
