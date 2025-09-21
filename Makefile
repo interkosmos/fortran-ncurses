@@ -4,6 +4,7 @@ PREFIX  = /usr/local
 AR      = ar
 CC      = gcc
 FC      = gfortran
+RM      = /bin/rm
 AFLAGS  = rcs
 CFLAGS  = -O2
 FFLAGS  = -O2 -std=f2018
@@ -12,7 +13,7 @@ LDLIBS  = -lncurses
 INCDIR   = $(PREFIX)/include/libfortran-ncurses
 LIBDIR   = $(PREFIX)/lib
 TARGET   = libfortran-ncurses.a
-EXAMPLES = acs color key label mouse scroll ship win
+EXAMPLES = acs color key label mouse pad scroll ship win
 
 SRC = src/ncurses.f90 \
       src/ncurses_const.f90 \
@@ -60,6 +61,9 @@ label: $(TARGET) examples/label.f90
 mouse: $(TARGET) examples/mouse.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o mouse examples/mouse.f90 $(TARGET) $(LDLIBS)
 
+pad: $(TARGET) examples/pad.f90
+	$(FC) $(FFLAGS) $(LDFLAGS) -o pad examples/pad.f90 $(TARGET) $(LDLIBS)
+
 scroll: $(TARGET) examples/scroll.f90
 	$(FC) $(FFLAGS) $(LDFLAGS) -o scroll examples/scroll.f90 $(TARGET) $(LDLIBS)
 
@@ -82,15 +86,16 @@ install: $(TARGET)
 	install -m 644 ncurses_util.mod $(INCDIR)/
 
 clean:
-	if [ `ls -1 *.mod 2>/dev/null | wc -l` -gt 0 ]; then rm *.mod; fi
-	if [ `ls -1 *.o 2>/dev/null | wc -l` -gt 0 ]; then rm *.o; fi
-	if [ -e $(TARGET) ]; then rm $(TARGET); fi
-	if [ -e mkconst ]; then rm mkconst; fi
-	if [ -e acs ]; then rm acs; fi
-	if [ -e color ]; then rm color; fi
-	if [ -e key ]; then rm key; fi
-	if [ -e label ]; then rm label; fi
-	if [ -e mouse ]; then rm mouse; fi
-	if [ -e scroll ]; then rm scroll; fi
-	if [ -e ship ]; then rm ship; fi
-	if [ -e win ]; then rm win; fi
+	if [ `ls -1 *.mod 2>/dev/null | wc -l` -gt 0 ]; then $(RM) *.mod; fi
+	if [ `ls -1 *.o 2>/dev/null | wc -l` -gt 0 ]; then $(RM) *.o; fi
+	if [ -e $(TARGET) ]; then $(RM) $(TARGET); fi
+	if [ -e mkconst ]; then $(RM) mkconst; fi
+	if [ -e acs ]; then $(RM) acs; fi
+	if [ -e color ]; then $(RM) color; fi
+	if [ -e key ]; then $(RM) key; fi
+	if [ -e label ]; then $(RM) label; fi
+	if [ -e mouse ]; then $(RM) mouse; fi
+	if [ -e pad ]; then $(RM) pad; fi
+	if [ -e scroll ]; then $(RM) scroll; fi
+	if [ -e ship ]; then $(RM) ship; fi
+	if [ -e win ]; then $(RM) win; fi

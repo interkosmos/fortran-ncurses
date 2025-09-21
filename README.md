@@ -53,7 +53,7 @@ $ ./example
 
 You can add _fortran-ncurses_ as an FPM dependency to your `fpm.toml`:
 
-```
+```toml
 [dependencies]
 fortran-ncurses = { git = "https://github.com/interkosmos/fortran-ncurses.git" }
 ```
@@ -69,6 +69,7 @@ fortran-ncurses = { git = "https://github.com/interkosmos/fortran-ncurses.git" }
 
 * Pradeep Padala, Thomas E. Dickey: [NCURSES Programming HOWTO](https://invisible-island.net/ncurses/howto/NCURSES-Programming-HOWTO.html)
 * Eric S. Raymond, Zeyd M. Ben-Halim, Thomas E. Dickey: [Writing Programs with NCURSES](https://invisible-island.net/ncurses/ncurses-intro.html)
+* [ncurses manuals](https://alfonsosiciliano.gitlab.io/posts/2021-11-03-ncurses-manuals.html)
 
 ## Licence
 

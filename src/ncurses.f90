@@ -957,6 +957,15 @@ module ncurses
             integer(c_int)                    :: napms
         end function napms
 
+        ! WINDOW *newpad(int nlines, int ncols)
+        function newpad(nlines, ncols) bind(c, name='newpad')
+            import :: c_int, c_ptr
+            implicit none
+            integer(c_int), intent(in), value :: nlines
+            integer(c_int), intent(in), value :: ncols
+            type(c_ptr)                       :: newpad
+        end function newpad
+
         ! SCREEN *newterm(char *type, FILE *outfd, FILE *infd)
         function newterm(type, outfd, infd) bind(c, name='newterm')
             import :: c_char, c_ptr
@@ -1066,6 +1075,43 @@ module ncurses
             integer(c_short), intent(out)       :: b
             integer(c_int)                      :: pair_content
         end function pair_content
+
+        ! int pechochar(WINDOW *pad, chtype ch)
+        function pechochar(pad, ch) bind(c, name='pechochar')
+            import :: c_int, c_ptr, chtype
+            implicit none
+            type(c_ptr),     intent(in), value :: pad
+            integer(chtype), intent(in), value :: ch
+            integer(c_int)                     :: pechochar
+        end function pechochar
+
+        ! int pnoutrefresh(WINDOW *pad, int pminrow, int pmincol, int sminrow, int smincol, int smaxrow, int smaxcol)
+        function pnoutrefresh(pad, pminrow, pmincol, sminrow, smincol, smaxrow, smaxcol) bind(c, name='pnoutrefresh')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: pad
+            integer(c_int), intent(in), value :: pminrow
+            integer(c_int), intent(in), value :: pmincol
+            integer(c_int), intent(in), value :: sminrow
+            integer(c_int), intent(in), value :: smincol
+            integer(c_int), intent(in), value :: smaxrow
+            integer(c_int), intent(in), value :: smaxcol
+            integer(c_int)                    :: pnoutrefresh
+        end function pnoutrefresh
+
+        ! int prefresh(WINDOW *pad, int pminrow, int pmincol, int sminrow, int smincol, int smaxrow, int smaxcol)
+        function prefresh(pad, pminrow, pmincol, sminrow, smincol, smaxrow, smaxcol) bind(c, name='prefresh')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: pad
+            integer(c_int), intent(in), value :: pminrow
+            integer(c_int), intent(in), value :: pmincol
+            integer(c_int), intent(in), value :: sminrow
+            integer(c_int), intent(in), value :: smincol
+            integer(c_int), intent(in), value :: smaxrow
+            integer(c_int), intent(in), value :: smaxcol
+            integer(c_int)                    :: prefresh
+        end function prefresh
 
         ! int putwin(WINDOW *win, FILE *filep)
         function putwin(win, filep) bind(c, name='putwin')
@@ -1336,6 +1382,18 @@ module ncurses
             implicit none
             integer(c_int) :: start_color
         end function start_color
+
+        ! WINDOW *subpad(WINDOW *parent, int nlines, int ncols, int begin_y, int begin_x)
+        function subpad(parent, nlines, ncols, begin_y, begin_x) bind(c, name='subpad')
+            import :: c_int, c_ptr
+            implicit none
+            type(c_ptr),    intent(in), value :: parent
+            integer(c_int), intent(in), value :: nlines
+            integer(c_int), intent(in), value :: ncols
+            integer(c_int), intent(in), value :: begin_y
+            integer(c_int), intent(in), value :: begin_x
+            type(c_ptr)                       :: subpad
+        end function subpad
 
         ! WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x)
         function subwin(orig, nlines, ncols, begin_y, begin_x) bind(c, name='subwin')
