@@ -21,6 +21,12 @@ $ make mkconst
 $ ./mkconst src/ncurses_const.f90
 ```
 
+To build all example programs:
+
+```
+$ make examples
+```
+
 ## Example
 
 Basic example program to initialise ncurses and output a string:
@@ -45,7 +51,7 @@ end program main
 Compile, link, and run the program:
 
 ```
-$ gfortran -I/opt/include -o example example.f90 /opt/lib/libfortran-ncurses.a -lncurses
+$ gfortran -I/opt/include/libfortran-ncurses -o example example.f90 /opt/lib/libfortran-ncurses.a -lncurses
 $ ./example
 ```
 

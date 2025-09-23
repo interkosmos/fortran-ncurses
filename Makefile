@@ -30,7 +30,7 @@ OBJ = ncurses.o \
 
 .PHONY: all clean examples install
 
-all: $(TARGET) $(EXAMPLES)
+all: $(TARGET)
 
 mkconst: util/mkconst.c
 	$(CC) $(CFLAGS) -o mkconst util/mkconst.c $(LDLIBS)
@@ -77,7 +77,7 @@ install: $(TARGET)
 	@echo "--- Installing library to $(LIBDIR)/ ..."
 	install -d $(LIBDIR)
 	install -m 644 $(TARGET) $(LIBDIR)/
-	@echo "--- Installing module to $(INCDIR)/ ..."
+	@echo "--- Installing modules to $(INCDIR)/ ..."
 	install -d $(INCDIR)
 	install -m 644 ncurses.mod $(INCDIR)/
 	install -m 644 ncurses_const.mod $(INCDIR)/
